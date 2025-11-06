@@ -17,8 +17,7 @@ def report():
     coffee_maker.report()
     money_machine.report()
 
-report()
-print("")
+
 
 # Retrieve the name of the drinks
 retrieved_drink_name = menu.get_items()
@@ -32,12 +31,7 @@ def print_menu():
     beverage_and_cost = [(beverage.name, beverage.cost) for beverage in menu.menu]
     for name, cost in beverage_and_cost:
         print(f"{name.capitalize():<15} ${cost:.2f}")
-
-
-
-print_menu()
-
-print("-----------------------")
+    return ""
 
 
 #process order
@@ -61,7 +55,8 @@ def process_order(drink_name):
 
 
 while is_on:
-    choice = input(f"\nPlease select operation (off, report) or order a drink ({menu.get_items()}): ").lower()
+    print_menu()
+    choice = input(f"\nPlease select operation (off, report) or order from the menu: ").lower()
     if choice == "off":
         is_on = False
         print("Turning off coffee machine...")
