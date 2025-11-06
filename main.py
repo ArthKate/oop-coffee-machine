@@ -29,32 +29,47 @@ def print_menu():
     s = "MENU"
     print(s.center(24, '-'))
     print("")
-    beverageNameAndCost = [(beverage.name, beverage.cost) for beverage in menu.menu]
-    for name, cost in beverageNameAndCost:
+    beverage_and_cost = [(beverage.name, beverage.cost) for beverage in menu.menu]
+    for name, cost in beverage_and_cost:
         print(f"{name.capitalize():<15} ${cost:.2f}")
-    return ""
 
 
-print(print_menu())
+
+print_menu()
+
 print("-----------------------")
 
-#Retrieves the drink from the menu
-def retrieve_drink(beverage_name):
-        order =  menu.find_drink(beverage_name)
-        return order.name
 
-order = retrieve_drink('latte')
-print(order)
+#process order
+def process_order(drink_name):
+    # 1. Find the drink
+    drink = menu.find_drink(drink_name)
+    if drink is None:
+        return False
 
-resource_status = coffee_maker.is_resource_sufficient(menu.find_drink('latte'))
-print(resource_status)
+    # 2. Check resources FIRST
+    if not coffee_maker.is_resource_sufficient(drink):
+        return False
 
-#Receive payment
-payment = money_machine.process_coins()
-print(f"Payment received: ${payment}")
+    # 3. Take payment (uses drink.cost)
+    if not money_machine.make_payment(drink.cost):
+        return False
 
-#validate payment transaction
-# payment_status = money_machine.make_payment(menu.find_drink('latte').cost)
+    # 4. Make coffee
+    coffee_maker.make_coffee(drink)
+    return True
+
+
+while is_on:
+    while is_on:
+        choice = input(f"\nPlease select operation (off, report) or order a drink ({menu.get_items()}): ").lower()
+        if choice == "off":
+            is_on = False
+            print("Turning off coffee machine...")
+        elif choice == "report":
+            report()
+        else:
+            process_order(choice)
 
 
 
