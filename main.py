@@ -61,15 +61,15 @@ def process_order(drink_name):
 
 
 while is_on:
-    while is_on:
-        choice = input(f"\nPlease select operation (off, report) or order a drink ({menu.get_items()}): ").lower()
-        if choice == "off":
-            is_on = False
-            print("Turning off coffee machine...")
-        elif choice == "report":
-            report()
-        else:
-            process_order(choice)
+    choice = input(f"\nPlease select operation (off, report) or order a drink ({menu.get_items()}): ").lower()
+    if choice == "off":
+        is_on = False
+        print("Turning off coffee machine...")
+    elif choice == "report":
+        report()
+    else:
+        process_order(choice)
+
 
 
 
